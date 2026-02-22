@@ -1,0 +1,12 @@
+services:
+  mcp-vault:
+    image: ghcr.io/modelcontextprotocol/server-filesystem:latest
+    container_name: ${MCP_CONTAINER_NAME:-mcp-vault}
+    volumes:
+      - ${NAS_VAULTS_PATH:-/mnt/nas/vaults}:${MCP_ROOT:-/data}:ro
+    environment:
+      MCP_ROOT: ${MCP_ROOT:-/data}
+      MCP_MODE: ${MCP_MODE:-readonly}
+    ports:
+      - "${MCP_PORT:-3333}:3333"
+    restart: unless-stopped
